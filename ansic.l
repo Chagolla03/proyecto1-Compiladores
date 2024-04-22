@@ -7,19 +7,23 @@ IS			(u|U|l|L)*
 
 %{
 #include <stdio.h>
+#include <string.h>
 #include "y.tab.h"
 
 void count();
 void comment();
-int check_type();
 enum {
 	VOIDVAL = 0,
 	CHARVAL,
 	INTVAL,
 	DOUBLEVAL
 };
+char buffer;
+int bufsize;
+int column = 0;
+int lineno = 0;
 %}
-
+%x INCHAR
 %option noyywrap
 
 %%
@@ -58,18 +62,146 @@ enum {
 "volatile"		{ count(); return(VOLATILE); }
 "while"			{ count(); return(WHILE); }
 
-{L}({L}|{D})*		{ count(); return(check_type()); }
+{L}({L}|{D})*			{ count(); 
+						  	yylval.name = strdup(yytext);
+							return IDENTIFIER; 
+						}
 
-0[xX]{H}+{IS}?		{ count(); return(CONSTANT); }
-0{D}+{IS}?		{ count(); return(CONSTANT); }
-{D}+{IS}?		{ count(); return(CONSTANT); }
-L?'(\\.|[^\\'])+'	{ count(); return(CONSTANT); }
+0[xX]{H}+{IS}?			{ count(); 
+							yylval.ival = strtol(yytext, NULL, 16);
+							yylval.valtype = INTVAL;
+							return(CONSTANT); 
+						}
 
-{D}+{E}{FS}?		{ count(); return(CONSTANT); }
-{D}*"."{D}+({E})?{FS}?	{ count(); return(CONSTANT); }
-{D}+"."{D}*({E})?{FS}?	{ count(); return(CONSTANT); }
+0{D}+{IS}?				{ count(); 
+							yylval.ival = strtol(yytext, NULL, 8);
+							yylval.valtype = INTVAL;
+							return(CONSTANT); 
+						}
 
-L?\"(\\.|[^\\"])*\"	{ count(); return(STRING_LITERAL); }
+{D}+{IS}?				{ count(); 
+							yylval.ival = strtol(yytext, NULL, 10);
+							yylval.valtype = INTVAL;
+							return(CONSTANT); 
+						}
+
+
+L?'						{ count(); 
+							BEGIN(INCHAR);
+							buffer = '\0';
+							bufsize = 0;
+							
+						}
+
+<INCHAR>\\.				{
+							if(bufsize>0){
+								printf("ERROR: line %d column %d multibyte char constant!\n", lineno + 1, column);
+								exit(2);
+							}
+
+							switch(yytext[1])
+							{
+							case 'a':
+								buffer = '\a';
+								break;
+							case 'b':
+								buffer = '\b';
+								break;
+							case 'f':
+								buffer = '\f';
+								break;
+							case 'n':
+								buffer = '\n';
+								break;
+							case 't':
+								buffer = '\t';
+								break;
+							case 'r':
+								buffer = '\r';
+								break;
+							case 'v':
+								buffer = '\v';
+								break;
+							default:
+								buffer = yytext[1];
+								break;
+							bufsize++;
+							}
+						}
+<INCHAR>(\\[0-7]+) 	{//Para caracteres escritos en octal
+							count();
+							int val;
+							if(bufsize>0){
+							printf("ERROR: line %d column %d multibyte char constant!\n", lineno + 1, column);
+							exit(2);
+							}
+							val = strtol(yytext + 1, NULL, 8);
+							if(val > 255){
+							printf("ERROR: line %d column %d multibyte char constant!\n", lineno + 1, column);
+							exit(2);
+							}
+							buffer = val;
+							bufsize++;
+						}
+
+<INCHAR>(\\x{H}+)   { //Para caracteres escritos en hexadecimal
+							count();
+							int val;
+							if(bufsize>0){
+							printf("ERROR: line %d column %d multibyte char constant!\n", lineno + 1, column);
+							exit(2);
+							}
+							val = strtol(yytext + 2, NULL, 16);
+							if(val > 255){
+							printf("ERROR: line %d column %d multibyte char constant!\n", lineno + 1, column);
+							exit(2);
+							}
+							buffer = val;
+							bufsize++;
+							}
+
+<INCHAR>[^\\']+			{
+							count();
+							if(bufsize>0) {
+							printf("ERROR: line %d column %d multibyte char constant!\n", lineno + 1, column);
+							exit(2);
+							}
+							buffer = yytext[0];
+							bufsize++;
+						}
+
+<INCHAR>'               {
+							count();
+							BEGIN(INITIAL);
+							yylval.cval = buffer;
+							yylval.valtype = CHARVAL;
+							return(CONSTANT); 
+						}
+
+{D}+{E}{FS}?			{ count(); 
+							yylval.dval = atof(yytext);
+							yylval.valtype = DOUBLEVAL;
+							return(CONSTANT); 
+						}
+
+
+{D}*"."{D}+({E})?{FS}?	{ count();
+							yylval.dval = atof(yytext);
+							yylval.valtype = DOUBLEVAL;
+							return(CONSTANT); 
+						}
+
+
+{D}+"."{D}*({E})?{FS}?	{ count(); 
+							yylval.dval = atof(yytext);
+							yylval.valtype = DOUBLEVAL;
+							return(CONSTANT); 
+						}
+
+
+L?\"(\\.|[^\\"])*\"	{ count(); 
+						return(STRING_LITERAL); 
+					}
 
 "..."			{ count(); return(ELLIPSIS); }
 ">>="			{ count(); return(RIGHT_ASSIGN); }
@@ -143,16 +275,16 @@ loop:
 		;
 }
 
-
-int column = 0;
-
 void count()
 {
 	int i;
 
 	for (i = 0; yytext[i] != '\0'; i++)
-		if (yytext[i] == '\n')
+		if (yytext[i] == '\n'){
 			column = 0;
+			lineno++;
+		}
+			
 		else if (yytext[i] == '\t')
 			column += 8 - (column % 8);
 		else
@@ -161,24 +293,6 @@ void count()
 	;
 }
 
-
-int check_type()
-{
-/*
-* pseudo code --- this is what it should check
-*
-*	if (yytext == type_name)
-*		return(TYPE_NAME);
-*
-*	return(IDENTIFIER);
-*/
-
-/*
-*	it actually will only return IDENTIFIER
-*/
-
-	return(IDENTIFIER);
-}
 
 char * tokens[] = {	
 	"AUTO",
