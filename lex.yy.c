@@ -632,6 +632,7 @@ char *yytext;
 #line 9 "ansic.l"
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "y.tab.h"
 
 void count();
@@ -646,9 +647,9 @@ char *buffer;
 int bufsize;
 int column = 0;
 int lineno = 0;
-#line 649 "lex.yy.c"
+#line 650 "lex.yy.c"
 
-#line 651 "lex.yy.c"
+#line 652 "lex.yy.c"
 
 #define INITIAL 0
 #define INCHAR 1
@@ -870,9 +871,9 @@ YY_DECL
 		}
 
 	{
-#line 29 "ansic.l"
+#line 30 "ansic.l"
 
-#line 875 "lex.yy.c"
+#line 876 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -932,177 +933,177 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 30 "ansic.l"
+#line 31 "ansic.l"
 { comment(); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 31 "ansic.l"
+#line 32 "ansic.l"
 ;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 32 "ansic.l"
+#line 33 "ansic.l"
 { count(); return(AUTO); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 33 "ansic.l"
+#line 34 "ansic.l"
 { count(); return(BREAK); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 34 "ansic.l"
+#line 35 "ansic.l"
 { count(); return(CASE); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 35 "ansic.l"
+#line 36 "ansic.l"
 { count(); return(CHAR); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 36 "ansic.l"
+#line 37 "ansic.l"
 { count(); return(CONST); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 37 "ansic.l"
+#line 38 "ansic.l"
 { count(); return(CONTINUE); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 38 "ansic.l"
+#line 39 "ansic.l"
 { count(); return(DEFAULT); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 39 "ansic.l"
+#line 40 "ansic.l"
 { count(); return(DO); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 40 "ansic.l"
+#line 41 "ansic.l"
 { count(); return(DOUBLE); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 41 "ansic.l"
+#line 42 "ansic.l"
 { count(); return(ELSE); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 42 "ansic.l"
+#line 43 "ansic.l"
 { count(); return(ENUM); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 43 "ansic.l"
+#line 44 "ansic.l"
 { count(); return(EXTERN); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 44 "ansic.l"
+#line 45 "ansic.l"
 { count(); return(FLOAT); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 45 "ansic.l"
+#line 46 "ansic.l"
 { count(); return(FOR); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 46 "ansic.l"
+#line 47 "ansic.l"
 { count(); return(GOTO); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 47 "ansic.l"
+#line 48 "ansic.l"
 { count(); return(IF); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 48 "ansic.l"
+#line 49 "ansic.l"
 { count(); return(INT); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 49 "ansic.l"
+#line 50 "ansic.l"
 { count(); return(LONG); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 50 "ansic.l"
+#line 51 "ansic.l"
 { count(); return(REGISTER); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 51 "ansic.l"
+#line 52 "ansic.l"
 { count(); return(RETURN); }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 52 "ansic.l"
+#line 53 "ansic.l"
 { count(); return(SHORT); }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 53 "ansic.l"
+#line 54 "ansic.l"
 { count(); return(SIGNED); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 54 "ansic.l"
+#line 55 "ansic.l"
 { count(); return(SIZEOF); }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 55 "ansic.l"
+#line 56 "ansic.l"
 { count(); return(STATIC); }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 56 "ansic.l"
+#line 57 "ansic.l"
 { count(); return(STRUCT); }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 57 "ansic.l"
+#line 58 "ansic.l"
 { count(); return(SWITCH); }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 58 "ansic.l"
+#line 59 "ansic.l"
 { count(); return(TYPEDEF); }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 59 "ansic.l"
+#line 60 "ansic.l"
 { count(); return(UNION); }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 60 "ansic.l"
+#line 61 "ansic.l"
 { count(); return(UNSIGNED); }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 61 "ansic.l"
+#line 62 "ansic.l"
 { count(); return(VOID); }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 62 "ansic.l"
+#line 63 "ansic.l"
 { count(); return(VOLATILE); }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 63 "ansic.l"
+#line 64 "ansic.l"
 { count(); return(WHILE); }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 65 "ansic.l"
+#line 66 "ansic.l"
 { count(); 
 						  	yylval.name = strdup(yytext);
 							return IDENTIFIER; 
@@ -1110,7 +1111,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 70 "ansic.l"
+#line 71 "ansic.l"
 { count(); 
 							yylval.ival = strtol(yytext, NULL, 16);
 							yylval.valtype = INTVAL;
@@ -1119,7 +1120,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 76 "ansic.l"
+#line 77 "ansic.l"
 { count(); 
 							yylval.ival = strtol(yytext, NULL, 8);
 							yylval.valtype = INTVAL;
@@ -1128,7 +1129,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 82 "ansic.l"
+#line 83 "ansic.l"
 { count(); 
 							yylval.ival = strtol(yytext, NULL, 10);
 							yylval.valtype = INTVAL;
@@ -1137,7 +1138,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 89 "ansic.l"
+#line 90 "ansic.l"
 { count(); 
 							BEGIN(INCHAR);
 							buffer = (char *)malloc(1);
@@ -1148,7 +1149,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 97 "ansic.l"
+#line 98 "ansic.l"
 {
 							if(bufsize>0){
 								printf("ERROR: line %d column %d multibyte char constant!\n", lineno + 1, column);
@@ -1187,7 +1188,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 132 "ansic.l"
+#line 133 "ansic.l"
 {//Para caracteres escritos en octal
 							count();
 							int val;
@@ -1206,7 +1207,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 148 "ansic.l"
+#line 149 "ansic.l"
 { //Para caracteres escritos en hexadecimal
 							count();
 							int val;
@@ -1226,7 +1227,7 @@ YY_RULE_SETUP
 case 43:
 /* rule 43 can match eol */
 YY_RULE_SETUP
-#line 164 "ansic.l"
+#line 165 "ansic.l"
 {
 							count();
 							if(bufsize>0) {
@@ -1239,7 +1240,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 174 "ansic.l"
+#line 175 "ansic.l"
 {
 							count();
 							BEGIN(INITIAL);
@@ -1251,7 +1252,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 183 "ansic.l"
+#line 184 "ansic.l"
 { count(); 
 							yylval.dval = atof(yytext);
 							yylval.valtype = DOUBLEVAL;
@@ -1260,7 +1261,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 190 "ansic.l"
+#line 191 "ansic.l"
 { count();
 							yylval.dval = atof(yytext);
 							yylval.valtype = DOUBLEVAL;
@@ -1269,7 +1270,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 197 "ansic.l"
+#line 198 "ansic.l"
 { count(); 
 							yylval.dval = atof(yytext);
 							yylval.valtype = DOUBLEVAL;
@@ -1278,7 +1279,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 204 "ansic.l"
+#line 205 "ansic.l"
 { 	count(); 
 					  	BEGIN(INSTR);
 						buffer = (char *)malloc(1);
@@ -1288,7 +1289,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 211 "ansic.l"
+#line 212 "ansic.l"
 {		count();
 							buffer = (char *)realloc(buffer, bufsize+2);
 							switch(yytext[1])
@@ -1323,7 +1324,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 242 "ansic.l"
+#line 243 "ansic.l"
 {//Para caracteres escritos en octal
 							count();
 							buffer = (char *)realloc(buffer, bufsize+2);
@@ -1339,7 +1340,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 255 "ansic.l"
+#line 256 "ansic.l"
 { //Para caracteres escritos en hexadecimal
 							count();
 							buffer = (char *)realloc(buffer, bufsize+2);
@@ -1356,7 +1357,7 @@ YY_RULE_SETUP
 case 52:
 /* rule 52 can match eol */
 YY_RULE_SETUP
-#line 268 "ansic.l"
+#line 269 "ansic.l"
 {
 							count();
 							buffer = (char *)realloc(buffer, bufsize+2);
@@ -1366,7 +1367,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 277 "ansic.l"
+#line 278 "ansic.l"
 {	count();
 						BEGIN(INITIAL);
 						yylval.sval = strdup(buffer); //crea un dupicado de la cadena y la asigna
@@ -1376,251 +1377,251 @@ YY_RULE_SETUP
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 286 "ansic.l"
+#line 287 "ansic.l"
 { count(); return(ELLIPSIS); }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 287 "ansic.l"
+#line 288 "ansic.l"
 { count(); return(RIGHT_ASSIGN); }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 288 "ansic.l"
+#line 289 "ansic.l"
 { count(); return(LEFT_ASSIGN); }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 289 "ansic.l"
+#line 290 "ansic.l"
 { count(); return(ADD_ASSIGN); }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 290 "ansic.l"
+#line 291 "ansic.l"
 { count(); return(SUB_ASSIGN); }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 291 "ansic.l"
+#line 292 "ansic.l"
 { count(); return(MUL_ASSIGN); }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 292 "ansic.l"
+#line 293 "ansic.l"
 { count(); return(DIV_ASSIGN); }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 293 "ansic.l"
+#line 294 "ansic.l"
 { count(); return(MOD_ASSIGN); }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 294 "ansic.l"
+#line 295 "ansic.l"
 { count(); return(AND_ASSIGN); }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 295 "ansic.l"
+#line 296 "ansic.l"
 { count(); return(XOR_ASSIGN); }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 296 "ansic.l"
+#line 297 "ansic.l"
 { count(); return(OR_ASSIGN); }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 297 "ansic.l"
+#line 298 "ansic.l"
 { count(); return(RIGHT_OP); }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 298 "ansic.l"
+#line 299 "ansic.l"
 { count(); return(LEFT_OP); }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 299 "ansic.l"
+#line 300 "ansic.l"
 { count(); return(INC_OP); }
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 300 "ansic.l"
+#line 301 "ansic.l"
 { count(); return(DEC_OP); }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 301 "ansic.l"
+#line 302 "ansic.l"
 { count(); return(PTR_OP); }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 302 "ansic.l"
+#line 303 "ansic.l"
 { count(); return(AND_OP); }
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 303 "ansic.l"
+#line 304 "ansic.l"
 { count(); return(OR_OP); }
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 304 "ansic.l"
+#line 305 "ansic.l"
 { count(); return(LE_OP); }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 305 "ansic.l"
+#line 306 "ansic.l"
 { count(); return(GE_OP); }
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 306 "ansic.l"
+#line 307 "ansic.l"
 { count(); return(EQ_OP); }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 307 "ansic.l"
+#line 308 "ansic.l"
 { count(); return(NE_OP); }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 308 "ansic.l"
+#line 309 "ansic.l"
 { count(); return(';'); }
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 309 "ansic.l"
+#line 310 "ansic.l"
 { count(); return('{'); }
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 310 "ansic.l"
+#line 311 "ansic.l"
 { count(); return('}'); }
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 311 "ansic.l"
+#line 312 "ansic.l"
 { count(); return(','); }
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 312 "ansic.l"
+#line 313 "ansic.l"
 { count(); return(':'); }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 313 "ansic.l"
+#line 314 "ansic.l"
 { count(); return('='); }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 314 "ansic.l"
+#line 315 "ansic.l"
 { count(); return('('); }
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 315 "ansic.l"
+#line 316 "ansic.l"
 { count(); return(')'); }
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 316 "ansic.l"
+#line 317 "ansic.l"
 { count(); return('['); }
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 317 "ansic.l"
+#line 318 "ansic.l"
 { count(); return(']'); }
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 318 "ansic.l"
+#line 319 "ansic.l"
 { count(); return('.'); }
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 319 "ansic.l"
+#line 320 "ansic.l"
 { count(); return('&'); }
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 320 "ansic.l"
+#line 321 "ansic.l"
 { count(); return('!'); }
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 321 "ansic.l"
+#line 322 "ansic.l"
 { count(); return('~'); }
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 322 "ansic.l"
+#line 323 "ansic.l"
 { count(); return('-'); }
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 323 "ansic.l"
+#line 324 "ansic.l"
 { count(); return('+'); }
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 324 "ansic.l"
+#line 325 "ansic.l"
 { count(); return('*'); }
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 325 "ansic.l"
+#line 326 "ansic.l"
 { count(); return('/'); }
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 326 "ansic.l"
+#line 327 "ansic.l"
 { count(); return('%'); }
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 327 "ansic.l"
+#line 328 "ansic.l"
 { count(); return('<'); }
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
-#line 328 "ansic.l"
+#line 329 "ansic.l"
 { count(); return('>'); }
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
-#line 329 "ansic.l"
+#line 330 "ansic.l"
 { count(); return('^'); }
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
-#line 330 "ansic.l"
+#line 331 "ansic.l"
 { count(); return('|'); }
 	YY_BREAK
 case 99:
 YY_RULE_SETUP
-#line 331 "ansic.l"
+#line 332 "ansic.l"
 { count(); return('?'); }
 	YY_BREAK
 case 100:
 /* rule 100 can match eol */
 YY_RULE_SETUP
-#line 333 "ansic.l"
+#line 334 "ansic.l"
 { count(); }
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
-#line 334 "ansic.l"
+#line 335 "ansic.l"
 { /* ignore bad characters */ }
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 336 "ansic.l"
+#line 337 "ansic.l"
 ECHO;
 	YY_BREAK
-#line 1623 "lex.yy.c"
+#line 1624 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(INCHAR):
 case YY_STATE_EOF(INSTR):
@@ -2630,7 +2631,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 336 "ansic.l"
+#line 337 "ansic.l"
 
 
 
@@ -2731,6 +2732,17 @@ char * tokens[] = {
 	"EQ_OP",
 	"NE_OP"};
 
+void printstr(char *str){
+	int i;
+	for (i=0; i<strlen(str); i++){
+		if(isprint(str[i]))
+			printf("%c", str[i]);
+		else
+			printf("\\%o", str[i]);
+	}
+}
+
+
 void print_token(int c)
 {
 	if(c<256)
@@ -2755,7 +2767,9 @@ void print_token(int c)
 					printf("<%s, \"%s\">", tokens[c-AUTO], yylval.name);
 					break;
 				case STRING_LITERAL:
-					printf("<%s, \"%s\">", tokens[c-AUTO], yylval.sval);
+					printf("<%s, \"", tokens[c-AUTO]);
+					printstr(yylval.sval);
+					printf("\">");
 					break;
 				default:
 					printf("<%s>", tokens[c-AUTO]);

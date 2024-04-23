@@ -8,6 +8,7 @@ IS			(u|U|l|L)*
 %{
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "y.tab.h"
 
 void count();
@@ -433,6 +434,17 @@ char * tokens[] = {
 	"EQ_OP",
 	"NE_OP"};
 
+void printstr(char *str){
+	int i;
+	for (i=0; i<strlen(str); i++){
+		if(isprint(str[i]))
+			printf("%c", str[i]);
+		else
+			printf("\\%o", str[i]);
+	}
+}
+
+
 void print_token(int c)
 {
 	if(c<256)
@@ -457,7 +469,9 @@ void print_token(int c)
 					printf("<%s, \"%s\">", tokens[c-AUTO], yylval.name);
 					break;
 				case STRING_LITERAL:
-					printf("<%s, \"%s\">", tokens[c-AUTO], yylval.sval);
+					printf("<%s, \"", tokens[c-AUTO]);
+					printstr(yylval.sval);
+					printf("\">");
 					break;
 				default:
 					printf("<%s>", tokens[c-AUTO]);
