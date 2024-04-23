@@ -18,12 +18,12 @@ enum {
 	INTVAL,
 	DOUBLEVAL
 };
-char buffer;
+char *buffer;
 int bufsize;
 int column = 0;
 int lineno = 0;
 %}
-%x INCHAR
+%x INCHAR INSTR
 %option noyywrap
 
 %%
@@ -88,7 +88,8 @@ int lineno = 0;
 
 L?'						{ count(); 
 							BEGIN(INCHAR);
-							buffer = '\0';
+							buffer = (char *)malloc(1);
+							buffer[0] = '\0';
 							bufsize = 0;
 							
 						}
@@ -102,31 +103,31 @@ L?'						{ count();
 							switch(yytext[1])
 							{
 							case 'a':
-								buffer = '\a';
+								buffer[0] = '\a';
 								break;
 							case 'b':
-								buffer = '\b';
+								buffer[0] = '\b';
 								break;
 							case 'f':
-								buffer = '\f';
+								buffer[0] = '\f';
 								break;
 							case 'n':
-								buffer = '\n';
+								buffer[0] = '\n';
 								break;
 							case 't':
-								buffer = '\t';
+								buffer[0] = '\t';
 								break;
 							case 'r':
-								buffer = '\r';
+								buffer[0] = '\r';
 								break;
 							case 'v':
-								buffer = '\v';
+								buffer[0] = '\v';
 								break;
 							default:
-								buffer = yytext[1];
+								buffer[0] = yytext[1];
 								break;
-							bufsize++;
 							}
+							bufsize++;
 						}
 <INCHAR>(\\[0-7]+) 	{//Para caracteres escritos en octal
 							count();
@@ -140,7 +141,7 @@ L?'						{ count();
 							printf("ERROR: line %d column %d multibyte char constant!\n", lineno + 1, column);
 							exit(2);
 							}
-							buffer = val;
+							buffer[0] = val;
 							bufsize++;
 						}
 
@@ -156,25 +157,26 @@ L?'						{ count();
 							printf("ERROR: line %d column %d multibyte char constant!\n", lineno + 1, column);
 							exit(2);
 							}
-							buffer = val;
+							buffer[0] = val;
 							bufsize++;
 							}
 
-<INCHAR>[^\\']+			{
+<INCHAR>[^\\']			{
 							count();
 							if(bufsize>0) {
 							printf("ERROR: line %d column %d multibyte char constant!\n", lineno + 1, column);
 							exit(2);
 							}
-							buffer = yytext[0];
+							buffer[0] = yytext[0];
 							bufsize++;
 						}
 
 <INCHAR>'               {
 							count();
 							BEGIN(INITIAL);
-							yylval.cval = buffer;
+							yylval.cval = buffer[0];
 							yylval.valtype = CHARVAL;
+							free(buffer);
 							return(CONSTANT); 
 						}
 
@@ -199,9 +201,87 @@ L?'						{ count();
 						}
 
 
-L?\"(\\.|[^\\"])*\"	{ count(); 
-						return(STRING_LITERAL); 
+L?\"				{ 	count(); 
+					  	BEGIN(INSTR);
+						buffer = (char *)malloc(1);
+						buffer[0] = '\0';
+						bufsize = 0;	 
 					}
+
+<INSTR>\\.			{		count();
+							buffer = (char *)realloc(buffer, bufsize+2);
+							switch(yytext[1])
+							{
+							case 'a':
+								buffer[bufsize] = '\a';
+								break;
+							case 'b':
+								buffer[bufsize] = '\b';
+								break;
+							case 'f':
+								buffer[bufsize] = '\f';
+								break;
+							case 'n':
+								buffer[bufsize] = '\n';
+								break;
+							case 't':
+								buffer[bufsize] = '\t';
+								break;
+							case 'r':
+								buffer[bufsize] = '\r';
+								break;
+							case 'v':
+								buffer[bufsize] = '\v';
+								break;
+							default:
+								buffer[bufsize] = yytext[1];
+								break;
+							}
+							bufsize++;
+						}
+<INSTR>(\\[0-7]+) 	{//Para caracteres escritos en octal
+							count();
+							buffer = (char *)realloc(buffer, bufsize+2);
+							int val;
+							val = strtol(yytext + 1, NULL, 8);
+							if(val > 255){
+							printf("ERROR: line %d column %d multibyte char constant!\n", lineno + 1, column);
+							exit(2);
+							}
+							buffer[bufsize] = val;
+							bufsize++;
+						}
+
+<INSTR>(\\x{H}+)   { //Para caracteres escritos en hexadecimal
+							count();
+							buffer = (char *)realloc(buffer, bufsize+2);
+							int val;
+							val = strtol(yytext + 2, NULL, 16);
+							if(val > 255){
+							printf("ERROR: line %d column %d multibyte char constant!\n", lineno + 1, column);
+							exit(2);
+							}
+							buffer[bufsize] = val;
+							bufsize++;
+							}
+
+<INSTR>[^\\"]			{
+							count();
+							buffer = (char *)realloc(buffer, bufsize+2);
+							buffer[bufsize] = yytext[0];
+							bufsize++;
+						}
+
+
+
+<INSTR>\"          	{	count();
+						BEGIN(INITIAL);
+						yylval.sval = strdup(buffer); //crea un dupicado de la cadena y la asigna
+						free(buffer);
+						return(STRING_LITERAL);
+					}
+
+
 
 "..."			{ count(); return(ELLIPSIS); }
 ">>="			{ count(); return(RIGHT_ASSIGN); }
